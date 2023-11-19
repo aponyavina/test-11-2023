@@ -1,0 +1,23 @@
+.table {
+  max-width: 596px;
+
+  &__header {
+    display: flex;
+    background: #0A508B;
+    color: rgba(255, 255, 255, 0.5);
+
+    div {
+      width: 100px;
+      padding: 9px;
+
+      &:last-child {
+        width: 300px;
+      }
+    }
+  }
+
+  &__row {
+    text-align: center;
+    border: 1px solid grey;
+  }
+}

@@ -1,25 +1,42 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, {useState} from 'react';
+import {useSelector} from 'react-redux';
+
+import {dataSelector} from './redux/tableSlice';
+import {GlobalContext} from './context/Context';
+import {EditingData} from './types';
+import Table from './components/Table';
+import Modal from './components/Modal';
+import {Form as AddForm, Form as EditForm} from './components/Form/Form';
+
+import './App.scss';
 
 function App() {
+  const data = useSelector(dataSelector);
+
+  const [modalActive, setModalActive] = useState<boolean>(false);
+  const [editingData, setEditingData] = useState<EditingData | null>();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <GlobalContext.Provider value={{ modalActive, setModalActive, setEditingData }}>
+          <div>
+              {Object.entries(data).map((table, i) => (
+                  <div className='d-flex' key={table[0]}>
+                      <Table
+                          data={table[1]}
+                          tableId={table[0]}
+                      />
+                      {i === 0 && <AddForm />}
+                  </div>
+              ))}
+
+              <Modal
+                  active={modalActive}
+                  setActive={setModalActive}
+              >
+                  <EditForm defaultValues={editingData}/>
+              </Modal>
+          </div>
+      </GlobalContext.Provider>
   );
 }
 

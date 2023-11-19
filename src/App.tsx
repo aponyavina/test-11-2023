@@ -18,16 +18,21 @@ function App() {
 
   return (
       <GlobalContext.Provider value={{ modalActive, setModalActive, setEditingData }}>
-          <div>
-              {Object.entries(data).map((table, i) => (
-                  <div className='d-flex' key={table[0]}>
-                      <Table
-                          data={table[1]}
-                          tableId={table[0]}
-                      />
-                      {i === 0 && <AddForm />}
+          <div className='container'>
+              <div className='block'>
+                  <div>
+                      {Object.entries(data).map((table, i) => (
+                          <Table
+                              key={table[0]}
+                              data={table[1]}
+                              tableId={table[0]}
+                          />
+                      ))}
                   </div>
-              ))}
+                  <AddForm classname='page'/>
+              </div>
+
+
 
               <Modal
                   active={modalActive}

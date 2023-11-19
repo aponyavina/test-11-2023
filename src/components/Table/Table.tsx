@@ -7,6 +7,8 @@ import {Row} from './Row/Row';
 import {IRowData, TypedDispatch} from "../../types";
 
 import './Table.scss'
+import CrossIcon from "../../icons/CrossIcon";
+import cn from "classnames";
 
 interface ITableProps {
     data: IRowData[];
@@ -26,10 +28,21 @@ const Table:FC<ITableProps> = ({data, tableId}) => {
     }
 
     return (
-        <div>
+        <div className='wrapper'>
             <div className='buttons'>
-                <button onClick={duplicateHandler}>Copy table</button>
-                {tableId !== DEFAULT_TABLE && <button onClick={deleteHandler}>Delete table</button>}
+                <button
+                    className={cn('button button--copy')}
+                    onClick={duplicateHandler}
+                >
+                    Copy table
+                </button>
+                {tableId !== DEFAULT_TABLE &&
+                    <button
+                        className={cn('button button--delete')}
+                        onClick={deleteHandler}
+                    >
+                       <CrossIcon/>
+                    </button>}
             </div>
             <div className='table'>
                 <div className='table__header'>

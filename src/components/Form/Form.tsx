@@ -1,19 +1,23 @@
 import React, {FC, memo, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form';
+import cn from "classnames";
 
 import {addTableRow, editTableRow, selectOptionsSelector} from '../../redux/tableSlice';
 import {useGlobalContext} from '../../context/Context';
 import {EditingData, Inputs, TypedDispatch} from "../../types";
-import {DEFAULT_TABLE} from "../../constants";
+import {COL_NAMES, DEFAULT_TABLE} from "../../constants";
+import Input from "../UI/Input/Input";
+import CustomSelect from "../UI/Select/Select";
 
 import './Form.scss';
 
 interface IAddFormProps{
     defaultValues?: EditingData | null;
+    classname?: string
 }
 
-export const Form:FC<IAddFormProps> = memo(({defaultValues}) => {
+export const Form:FC<IAddFormProps> = memo(({defaultValues, classname}) => {
     const dispatch = useDispatch<TypedDispatch>();
 
     const {defaultValue = null, tableId = DEFAULT_TABLE} = defaultValues || {};
@@ -21,13 +25,19 @@ export const Form:FC<IAddFormProps> = memo(({defaultValues}) => {
 
     const {
         register,
+        control,
         handleSubmit,
-        formState: { errors },
+        formState: { errors, isValid },
     } = useForm<Inputs>();
 
     const selectOptions = useSelector(selectOptionsSelector);
 
     const onSubmit: SubmitHandler<Inputs> = useCallback((data) => {
+        if (typeof data.city !== "string") {
+            // @ts-ignore
+            data.city = data.city.value;
+        }
+
         if (defaultValues) {
             dispatch(editTableRow({tableId, data: {...data, id: defaultValue?.id}}));
             setModalActive(false);
@@ -37,43 +47,51 @@ export const Form:FC<IAddFormProps> = memo(({defaultValues}) => {
     }, [defaultValue?.id, defaultValues, dispatch, setModalActive, tableId])
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className='form'>
-            <input
-                defaultValue={defaultValue?.name ?? ''}
-                placeholder='name'
-                {...register('name', { required: true })}
-            />
+        <form onSubmit={handleSubmit(onSubmit)} className={cn('form', classname ?? '')}>
+            <div className='form-block'>
+                <Input
+                    register={register('name', { required: true })}
+                    defaultValue={defaultValue?.name ?? ''}
+                    placeholder='Name'
+                />
+            </div>
+            <div className='form-block'>
+                <Input
+                    register={register('surname', { required: true })}
+                    defaultValue={defaultValue?.surname ?? ''}
+                    placeholder='Surname'
+                />
+            </div>
+            <div className='form-block'>
+                <Input
+                    type='number'
+                    register={register('age', { required: true })}
+                    // @ts-ignore
+                    defaultValue={defaultValue?.age ?? ''}
+                    placeholder='Age'
+                />
+            </div>
+            <div className='form-block'>
+                <CustomSelect
+                    control={control}
+                    name='city'
+                    defaultValue={defaultValue?.city}
+                    rules={{
+                        required: {
+                            value: true,
+                            message: 'Это поле необходимо заполнить'
+                        },
+                    }}
+                    placeholder='City'
+                    options={selectOptions}
+                />
+            </div>
 
-            <input
-                defaultValue={defaultValue?.surname ?? ''}
-                placeholder='surname'
-                {...register('surname', { required: true })}
-            />
-            {errors.surname && <span>This field is required</span>}
-
-            <input
-                defaultValue={defaultValue?.age ?? ''}
-                placeholder='age'
-                type='number'
-                {...register('age', { required: true })}
-            />
-
-            <select
-                placeholder='city'
-                {...register('city', { required: true })}
-            >
-                {selectOptions.map((option, i) => (
-                    <option
-                        key={i}
-                        value={option}
-                        selected={defaultValue?.city === option}
-                    >
-                        {option}
-                    </option>
-                ))}
-            </select>
-
-            <button type='submit'>{defaultValue ? 'Edit' : 'Add'}</button>
+            <button
+                disabled={!isValid}
+                type='submit'
+                className='form__button'
+            >{defaultValue ? 'Edit' : 'Add'}</button>
         </form>
     );
 });

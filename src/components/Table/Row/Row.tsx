@@ -4,6 +4,7 @@ import {useDispatch} from 'react-redux';
 import {deleteTableRow} from '../../../redux/tableSlice';
 import {useGlobalContext} from '../../../context/Context';
 import {IRowData, RowType, TypedDispatch} from '../../../types';
+import cn from "classnames";
 
 interface IRowProps {
     data?: IRowData;
@@ -27,15 +28,17 @@ export const Row:FC<IRowProps> = memo(({data, type, tableId}) => {
 
     return (
         (type === 'empty' && !data)
-            ? <div className='table__row'>No data</div>
-            : <div className='d-flex'>
+            ? <div className='table__row'>
+                <div className='w-100'>No data</div>
+            </div>
+            : <div className='table__row'>
                 <div>{data?.name}</div>
                 <div>{data?.surname}</div>
                 <div>{data?.age}</div>
                 <div>{data?.city}</div>
-                <div>
-                    <button onClick={editHandler}>Edit</button>
-                    <button onClick={deleteHandler}>Delete</button>
+                <div className='table__row-buttons'>
+                    <span className={cn('button', 'button--edit')} onClick={editHandler}>Edit</span>
+                    <span className={cn('button', 'button--delete')} onClick={deleteHandler}>Delete</span>
                 </div>
             </div>
     );

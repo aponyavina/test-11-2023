@@ -19,29 +19,29 @@ export const tableSlice = createSlice({
         addTableRow: (state, {payload}) => {
             let table = state.data[payload.tableId];
             table.push(payload.data);
-            toast.success(TEXT_NOTIFICATIONS.ADD_ROW_SUCCESS);
+            toast.success(TEXT_NOTIFICATIONS.ADD_ROW_SUCCESS, {position: "bottom-right"});
         },
         deleteTableRow: (state, {payload}) => {
             let {data} = state;
             state.data[payload.tableId] = data[payload.tableId]
                 .filter((item: IRowData) => item.id !== payload.dataId);
-            toast.success(TEXT_NOTIFICATIONS.DELETE_ROW_SUCCESS);
+            toast.success(TEXT_NOTIFICATIONS.DELETE_ROW_SUCCESS, {position: "bottom-right"});
         },
         editTableRow: (state, {payload}) => {
             let {data} = state;
             state.data[payload.tableId] = data[payload.tableId]
                 .map((item: IRowData) => item.id === payload.data.id ? payload.data : item);
-            toast.success(TEXT_NOTIFICATIONS.EDIT_ROW_SUCCESS);
+            toast.success(TEXT_NOTIFICATIONS.EDIT_ROW_SUCCESS, {position: "bottom-right"});
         },
         duplicateTable: (state, {payload}) => {
             let {data} = state;
             state.data[payload.id] = data[payload.tableId];
-            toast.success(TEXT_NOTIFICATIONS.DUPLICATE_TABLE_SUCCESS);
+            toast.success(TEXT_NOTIFICATIONS.DUPLICATE_TABLE_SUCCESS, {position: "bottom-right"});
         },
         deleteTable: (state, {payload}) => {
             let {data} = state;
             delete data[payload];
-            toast.success(TEXT_NOTIFICATIONS.DELETE_TABLE_SUCCESS);
+            toast.success(TEXT_NOTIFICATIONS.DELETE_TABLE_SUCCESS, {position: "bottom-right"});
         }
     },
 });

@@ -8,8 +8,6 @@ import {createReduxStore} from './redux/store';
 import reportWebVitals from './reportWebVitals';
 import App from './App';
 
-import './index.scss';
-
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );

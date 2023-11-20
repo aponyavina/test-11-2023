@@ -1,3 +1,5 @@
+@import "styles/variables";
+
 .form {
   display: flex;
   flex-direction: column;
@@ -10,18 +12,17 @@
   top: 50px;
   height: fit-content;
 
-  @media screen and (max-width: 1024px) {
+  @media #{$screen-desktop} {
     position: static;
   }
 
-  @media screen and (max-width: 480px) {
+  @media #{$screen-mobile} {
     min-width: unset;
   }
 
-  &.page {
-    @media screen and (max-width: 1024px) {
-      margin-bottom: 60px;
-    }
+  &.modalType {
+    box-shadow: unset;
+    margin-top: 20px;
   }
 
   &-block {

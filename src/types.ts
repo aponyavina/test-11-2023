@@ -6,7 +6,7 @@ export interface Inputs {
     name: string
     surname: string
     age: number
-    city: string
+    city: {value: string, label: string} | null
 }
 
 export interface IRowData extends Inputs {

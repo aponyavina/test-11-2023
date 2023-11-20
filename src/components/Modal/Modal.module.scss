@@ -1,3 +1,5 @@
+@import "styles/variables";
+
 .modal {
   height: 100vh;
   width: 100vw;
@@ -17,13 +19,30 @@
     pointer-events: all;
   }
 
+
   &__content {
+    position: relative;
     padding: 20px;
     border-radius: 12px;
     background-color: white;
     transform: scale(0.5);
     transition: 0.4s all;
-    width: 50vw;
+    width: 100%;
+    max-width: 300px;
+
+    @media #{$screen-tablet} {
+      width: 100%;
+
+    }
+
+    .cross {
+      z-index: 1;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: grey;
+      cursor: pointer;
+    }
 
     &.active {
       transform: scale(1);

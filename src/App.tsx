@@ -8,7 +8,7 @@ import Table from './components/Table';
 import Modal from './components/Modal';
 import {Form as AddForm, Form as EditForm} from './components/Form/Form';
 
-import './App.scss';
+import styles from './App.module.scss';
 
 function App() {
   const data = useSelector(dataSelector);
@@ -18,9 +18,9 @@ function App() {
 
   return (
       <GlobalContext.Provider value={{ modalActive, setModalActive, setEditingData }}>
-          <div className='container'>
-              <div className='block'>
-                  <div>
+          <div className={styles['container']}>
+              <div className={styles['wrapper']}>
+                  <div className={styles['block']}>
                       {Object.entries(data).map((table, i) => (
                           <Table
                               key={table[0]}
@@ -29,7 +29,7 @@ function App() {
                           />
                       ))}
                   </div>
-                  <AddForm classname='page'/>
+                  <AddForm />
               </div>
 
 
@@ -38,7 +38,10 @@ function App() {
                   active={modalActive}
                   setActive={setModalActive}
               >
-                  <EditForm defaultValues={editingData}/>
+                  <EditForm
+                      defaultValues={editingData}
+                      className='modalType'
+                  />
               </Modal>
           </div>
       </GlobalContext.Provider>

@@ -1,0 +1,41 @@
+@import "styles/variables";
+
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+  monospace;
+}
+
+.container {
+  font-size: 12px;
+  max-width: 1350px;
+  margin: 0 auto;
+
+  .wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    padding: 50px;
+    gap: 50px;
+
+    @media #{$screen-desktop} {
+      flex-direction: column-reverse;
+    }
+
+    @media #{$screen-mobile} {
+      padding: 20px;
+    }
+
+    .block {
+      display: flex;
+      flex-direction: column;
+      gap: 50px;
+    }
+  }
+}

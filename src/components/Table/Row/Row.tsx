@@ -1,10 +1,12 @@
 import React, {FC, memo, useCallback} from 'react';
 import {useDispatch} from 'react-redux';
+import cn from "classnames";
 
 import {deleteTableRow} from '../../../redux/tableSlice';
 import {useGlobalContext} from '../../../context/Context';
 import {IRowData, RowType, TypedDispatch} from '../../../types';
-import cn from "classnames";
+
+import styles from "../Table.module.scss";
 
 interface IRowProps {
     data?: IRowData;
@@ -28,17 +30,17 @@ export const Row:FC<IRowProps> = memo(({data, type, tableId}) => {
 
     return (
         (type === 'empty' && !data)
-            ? <div className='table__row'>
-                <div className='w-100'>No data</div>
+            ? <div className={styles['table__row']}>
+                <div className={styles['w-100']}>No data</div>
             </div>
-            : <div className='table__row'>
+            : <div className={styles['table__row']}>
                 <div>{data?.name}</div>
                 <div>{data?.surname}</div>
                 <div>{data?.age}</div>
-                <div>{data?.city}</div>
-                <div className='table__row-buttons'>
-                    <span className={cn('button', 'button--edit')} onClick={editHandler}>Edit</span>
-                    <span className={cn('button', 'button--delete')} onClick={deleteHandler}>Delete</span>
+                <div>{data?.city?.value}</div>
+                <div className={styles['table__row-buttons']}>
+                    <span className={cn(styles['button'], styles['button--edit'])} onClick={editHandler}>Edit</span>
+                    <span className={cn(styles['button'], styles['button--delete'])} onClick={deleteHandler}>Delete</span>
                 </div>
             </div>
     );

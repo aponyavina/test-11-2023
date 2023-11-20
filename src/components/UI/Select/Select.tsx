@@ -5,7 +5,6 @@ import {Controller} from 'react-hook-form';
 interface ICustomSelectProps {
     control: any;
     name: string;
-    defaultValue: string | undefined;
     rules: any;
     placeholder: string;
     options: string[];
@@ -14,7 +13,6 @@ interface ICustomSelectProps {
 const CustomSelect:FC<ICustomSelectProps> = ({
      control,
      name,
-     defaultValue,
      rules,
      placeholder,
      options,
@@ -24,7 +22,6 @@ const CustomSelect:FC<ICustomSelectProps> = ({
     return <Controller
         control={control}
         name={name}
-        defaultValue={defaultValue && {label: defaultValue, value: defaultValue}}
         rules={rules}
         render={({
             field: {onChange, ref, value},

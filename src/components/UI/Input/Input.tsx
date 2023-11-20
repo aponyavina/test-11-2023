@@ -1,28 +1,33 @@
 import React, {FC} from 'react';
 
-import './Input.scss';
+import styles from './Input.module.scss';
+import cn from "classnames";
 
 interface IInputProps {
     type?: 'text' | 'number';
     register: any;
-    defaultValue?: string;
     placeholder: string;
+    error?: any;
+    errorMessage?: string;
 }
 
 const Input:FC<IInputProps> = ({
    type = 'text',
    register,
-   defaultValue,
    placeholder,
+   error,
+   errorMessage,
 }) => {
     return (
-        <input
-            className='input'
-            type={type}
-            {...register}
-            defaultValue={defaultValue}
-            placeholder={placeholder}
-        />
+        <>
+            <input
+                className={cn(styles['input'], {[styles['input--error']]: error})}
+                type={type}
+                {...register}
+                placeholder={placeholder}
+            />
+            <div className={cn(styles['error-text'], {[styles['visible']]: error})}>{errorMessage}</div>
+        </>
     );
 };
 

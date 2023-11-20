@@ -1,14 +1,14 @@
 import React, {FC, memo} from 'react';
 import {useDispatch} from 'react-redux';
+import cn from "classnames";
 
 import {deleteTable, duplicateTable} from '../../redux/tableSlice';
 import {COL_NAMES, DEFAULT_TABLE} from '../../constants';
 import {Row} from './Row/Row';
 import {IRowData, TypedDispatch} from "../../types";
-
-import './Table.scss'
 import CrossIcon from "../../icons/CrossIcon";
-import cn from "classnames";
+
+import styles from './Table.module.scss'
 
 interface ITableProps {
     data: IRowData[];
@@ -28,41 +28,42 @@ const Table:FC<ITableProps> = ({data, tableId}) => {
     }
 
     return (
-        <div className='wrapper'>
-            <div className='buttons'>
+        <div className={styles['wrapper']}>
+            <div className={styles['wrapper-buttons']}>
                 <button
-                    className={cn('button button--copy')}
+                    className={cn(styles['button'], styles['button--copy'])}
                     onClick={duplicateHandler}
                 >
                     Copy table
                 </button>
                 {tableId !== DEFAULT_TABLE &&
-                    <button
-                        className={cn('button button--delete')}
+                    <CrossIcon
+                        className={cn(styles['button'], styles['button--delete'])}
                         onClick={deleteHandler}
-                    >
-                       <CrossIcon/>
-                    </button>}
-            </div>
-            <div className='table'>
-                <div className='table__header'>
-                    {COL_NAMES.map(col => (<div key={col}>{col}</div>))}
-                </div>
-
-                <div className='table__body'>
-                    {!data?.length
-                        ? <Row
-                            type='empty'
-                            tableId={tableId}
-                        />
-                        : data.map((item: IRowData) => (
-                            <Row
-                                type='filled'
-                                key={item.id}
-                                data={item}
-                                tableId={tableId}
-                            />))
+                    />
                     }
+            </div>
+            <div className={styles['wrapper-table']}>
+                <div className={styles['table']}>
+                    <div className={styles['table__header']}>
+                        {COL_NAMES.map(col => (<div key={col}>{col}</div>))}
+                    </div>
+
+                    <div className={styles['table__body']}>
+                        {!data?.length
+                            ? <Row
+                                type='empty'
+                                tableId={tableId}
+                            />
+                            : data.map((item: IRowData) => (
+                                <Row
+                                    type='filled'
+                                    key={item.id}
+                                    data={item}
+                                    tableId={tableId}
+                                />))
+                        }
+                    </div>
                 </div>
             </div>
         </div>

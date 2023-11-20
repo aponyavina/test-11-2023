@@ -1,16 +1,16 @@
 @import "styles/variables";
 
 .form {
+  position: sticky;
+  top: 50px;
   display: flex;
   flex-direction: column;
   min-width: 280px;
+  height: fit-content;
   padding: 20px 16px;
   border-radius: 4px;
   background: #FFF;
   box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.15);
-  position: sticky;
-  top: 50px;
-  height: fit-content;
 
   @media #{$screen-desktop} {
     position: static;
@@ -21,22 +21,22 @@
   }
 
   &.modalType {
-    box-shadow: unset;
     margin-top: 20px;
+    box-shadow: unset;
   }
 
-  &-block {
+  &__group {
     margin-bottom: 16px;
   }
 
   &__button {
+    font-weight: 700;
     padding: 14px;
     border-radius: 4px;
     background: #1493FE;
     text-transform: uppercase;
     color: #fff;
     border: unset;
-    font-weight: 700;
 
     &:disabled {
       background: #C2CBD1;

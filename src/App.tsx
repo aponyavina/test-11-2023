@@ -5,7 +5,7 @@ import {dataSelector} from './redux/tableSlice';
 import {GlobalContext} from './context/Context';
 import {EditingData} from './types';
 import Table from './components/Table';
-import Modal from './components/Modal';
+import Modal from './components/UI/Modal';
 import {Form as AddForm, Form as EditForm} from './components/Form/Form';
 
 import styles from './App.module.scss';
@@ -31,8 +31,6 @@ function App() {
                   </div>
                   <AddForm />
               </div>
-
-
 
               <Modal
                   active={modalActive}

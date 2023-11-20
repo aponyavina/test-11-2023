@@ -2,7 +2,7 @@ import React, {FC} from 'react';
 
 interface ICrossIconProps {
     className?: string;
-    onClick: any;
+    onClick: () => void;
 }
 
 const CrossIcon:FC<ICrossIconProps> = ({className, onClick}) => (

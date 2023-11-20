@@ -1,11 +1,17 @@
 import {FC} from "react";
 import Select from 'react-select';
-import {Controller} from 'react-hook-form';
+import {Control, Controller, RegisterOptions} from 'react-hook-form';
+
+import {Inputs} from "../../../types";
+import {customStyles} from "./customSelectStyles";
 
 interface ICustomSelectProps {
-    control: any;
-    name: string;
-    rules: any;
+    control: Control<Inputs, keyof Inputs>;
+    name: keyof Inputs;
+    rules: Omit<
+        RegisterOptions<Inputs, keyof Inputs>,
+        "valueAsNumber" | "valueAsDate" | "setValueAs" | "disabled"
+    >;
     placeholder: string;
     options: string[];
 }
@@ -30,8 +36,7 @@ const CustomSelect:FC<ICustomSelectProps> = ({
             <div>
                 <Select
                     ref={ref}
-                    className="basic-single"
-                    classNamePrefix="select"
+                    styles={customStyles()}
                     onChange={onChange}
                     value={value}
                     options={selectOptions}

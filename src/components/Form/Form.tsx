@@ -1,4 +1,4 @@
-import React, {FC, memo, useCallback, useEffect} from 'react';
+import React, {FC, memo, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import cn from "classnames";
@@ -6,7 +6,7 @@ import cn from "classnames";
 import {addTableRow, editTableRow, selectOptionsSelector} from '../../redux/tableSlice';
 import {useGlobalContext} from '../../context/Context';
 import {EditingData, Inputs, TypedDispatch} from "../../types";
-import {DEFAULT_TABLE} from "../../constants";
+import {DEFAULT_TABLE, ERROR_MESSAGES} from "../../constants";
 import Input from "../UI/Input/Input";
 import CustomSelect from "../UI/Select/Select";
 
@@ -39,59 +39,60 @@ export const Form:FC<IAddFormProps> = memo(({defaultValues, className}) => {
             setValue('age', defaultValue.age);
             setValue('city',  {label: defaultValue?.city?.label ?? '', value: defaultValue?.city?.value ?? ''});
         }
-    }, [defaultValue]);
+    }, [defaultValue, setValue]);
 
     const selectOptions = useSelector(selectOptionsSelector);
 
-    const onSubmit: SubmitHandler<Inputs> = useCallback((data) => {
-
-        if (defaultValues) {
-            dispatch(editTableRow({tableId, data: {...data, id: defaultValue?.id}}));
-            reset();
-            setValue('city', null);
-            setModalActive(false);
-        } else {
-            dispatch(addTableRow({tableId, data: {...data, id: Number(new Date().getTime())}}));
+    const onSubmit: SubmitHandler<Inputs> = (data) => {
+        const resetForm = () => {
             reset();
             setValue('city', null);
         }
-    }, [defaultValue?.id, defaultValues, dispatch, setModalActive, tableId])
+        if (defaultValues) {
+            dispatch(editTableRow({tableId, data: {...data, id: defaultValue?.id}}));
+            resetForm();
+            setModalActive(false);
+        } else {
+            dispatch(addTableRow({tableId, data: {...data, id: Number(new Date().getTime())}}));
+            resetForm();
+        }
+    };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} className={cn(styles['form'], {[styles[`${className}`]]: className})}>
-            <div className={styles['form-block']}>
+            <div className={styles['form__group']}>
                 <Input
-                    register={register('name', { required: true, pattern: /[A-Za-z]{3}/ })}
+                    register={register('name', { required: true, pattern: /^([A-Za-z]{3,})$/ })}
                     placeholder='Name'
                     error={errors?.name}
-                    errorMessage='This field must contain at least 3 letters'
+                    errorMessage={ERROR_MESSAGES.NAME}
                 />
             </div>
-            <div className={styles['form-block']}>
+            <div className={styles['form__group']}>
                 <Input
-                    register={register('surname', { required: true, pattern: /[A-Za-z]{3}/ })}
+                    register={register('surname', { required: true, pattern: /^([A-Za-z]{3,})$/ })}
                     placeholder='Surname'
                     error={errors?.surname}
-                    errorMessage='This field must contain at least 3 letters'
+                    errorMessage={ERROR_MESSAGES.NAME}
                 />
             </div>
-            <div className={styles['form-block']}>
+            <div className={styles['form__group']}>
                 <Input
                     type='number'
                     register={register('age', { required: true,  validate: (value) => (value > 14 && value < 90) })}
                     placeholder='Age'
                     error={errors?.age}
-                    errorMessage='This field must contain a number from 14 to 90'
+                    errorMessage={ERROR_MESSAGES.AGE}
                 />
             </div>
-            <div className={styles['form-block']}>
+            <div className={styles['form__group']}>
                 <CustomSelect
                     control={control}
                     name='city'
                     rules={{
                         required: {
                             value: true,
-                            message: 'Это поле необходимо заполнить'
+                            message: ERROR_MESSAGES.CITY
                         },
                     }}
                     placeholder='City'

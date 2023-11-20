@@ -1,13 +1,16 @@
 import React, {FC} from 'react';
+import cn from "classnames";
 
 import styles from './Input.module.scss';
-import cn from "classnames";
+import {FieldError} from "react-hook-form/dist/types/errors";
+import {UseFormRegisterReturn} from "react-hook-form";
+import {Inputs} from "../../../types";
 
 interface IInputProps {
     type?: 'text' | 'number';
-    register: any;
+    register: UseFormRegisterReturn<keyof Inputs>;
     placeholder: string;
-    error?: any;
+    error?: FieldError;
     errorMessage?: string;
 }
 

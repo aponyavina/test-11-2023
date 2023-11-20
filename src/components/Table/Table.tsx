@@ -4,7 +4,7 @@ import cn from "classnames";
 
 import {deleteTable, duplicateTable} from '../../redux/tableSlice';
 import {COL_NAMES, DEFAULT_TABLE} from '../../constants';
-import {Row} from './Row/Row';
+import Row from './Row';
 import {IRowData, TypedDispatch} from "../../types";
 import CrossIcon from "../../icons/CrossIcon";
 
@@ -41,7 +41,7 @@ const Table:FC<ITableProps> = ({data, tableId}) => {
                         className={cn(styles['button'], styles['button--delete'])}
                         onClick={deleteHandler}
                     />
-                    }
+                }
             </div>
             <div className={styles['wrapper-table']}>
                 <div className={styles['table']}>

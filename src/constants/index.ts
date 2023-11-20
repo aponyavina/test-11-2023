@@ -1,10 +1,15 @@
 export const CITY_OPTIONS = ['Riga', 'Daugavpils', 'Jūrmala', 'Ventspils'];
 export const TEXT_NOTIFICATIONS = {
-    ADD_ROW_SUCCESS: 'Запись добавлена',
-    DELETE_ROW_SUCCESS: 'Запись удалена',
-    EDIT_ROW_SUCCESS: 'Запись изменена',
-    DUPLICATE_TABLE_SUCCESS: 'Таблица продублирована',
-    DELETE_TABLE_SUCCESS: 'Таблица удалена',
+    ADD_ROW_SUCCESS: 'Entry is added',
+    DELETE_ROW_SUCCESS: 'Entry is deleted',
+    EDIT_ROW_SUCCESS: 'Entry is changed',
+    DUPLICATE_TABLE_SUCCESS: 'Table is duplicated',
+    DELETE_TABLE_SUCCESS: 'Table is deleted',
 }
 export const DEFAULT_TABLE = 'default-table';
 export const COL_NAMES = ['Name', 'Surname', 'Age', 'City', ''];
+export const ERROR_MESSAGES = {
+    NAME: 'This field must contain only letters, at least 3 (only eng)',
+    AGE: 'This field must contain a number from 14 to 90',
+    CITY: 'This field is required'
+};

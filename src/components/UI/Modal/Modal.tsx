@@ -1,7 +1,7 @@
 import React, {Dispatch, FC, SetStateAction, memo} from 'react';
 import cn from "classnames";
 
-import CrossIcon from "../../icons/CrossIcon";
+import CrossIcon from "../../../icons/CrossIcon";
 
 import styles from './Modal.module.scss';
 

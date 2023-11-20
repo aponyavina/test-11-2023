@@ -21,13 +21,14 @@
         color: #fff;
         border: unset;
         border-radius: 2px;
+        text-decoration: none;
       }
 
       &--delete {
-        background: unset;
-        border: unset;
         padding: 0;
+        background: unset;
         color: #EB5E58;
+        border: unset;
       }
     }
   }
@@ -71,7 +72,7 @@
           border-right: 1px solid #EBEBEB;
         }
 
-        &.w-100 {
+        &.no-data {
           width: 100%;
           text-align: center;
         }
@@ -80,20 +81,20 @@
       &-buttons {
         display: flex;
         justify-content: space-around;
-
-        .button {
-          text-decoration: underline;
-          cursor: pointer;
-
-          &--edit {
-            color: #057AE3;
-          }
-
-          &--delete {
-            color: #B0263D;
-          }
-        }
       }
     }
+  }
+}
+
+.button {
+  text-decoration: underline;
+  cursor: pointer;
+
+  &--edit {
+    color: #057AE3;
+  }
+
+  &--delete {
+    color: #B0263D;
   }
 }

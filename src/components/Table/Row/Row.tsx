@@ -25,7 +25,9 @@ const Row:FC<IRowProps> = ({data, type, tableId}) => {
     };
 
     const deleteHandler = () => {
-        dispatch(deleteTableRow({tableId, dataId: data?.id}))
+        if (data?.id) {
+            dispatch(deleteTableRow({tableId, dataId: data?.id}))
+        }
     };
 
     return (

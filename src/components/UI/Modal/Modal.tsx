@@ -1,4 +1,4 @@
-import React, {Dispatch, FC, SetStateAction, memo} from 'react';
+import React, {Dispatch, FC, SetStateAction, MouseEvent, memo} from 'react';
 import cn from "classnames";
 
 import CrossIcon from "../../../icons/CrossIcon";
@@ -16,21 +16,24 @@ const Modal:FC<IModalProps> = ({
     setActive,
     children
 }) => {
+    const closeModalHandler = () => setActive(false);
+    const stopPropagationHandler = (e: MouseEvent<HTMLDivElement>) => e.stopPropagation();
+
     return (
         <div
             className={cn(styles['modal'], {[styles['active']]: active})}
-            onClick={() => setActive(false)}
+            onClick={closeModalHandler}
         >
             <div
                 className={cn(styles['modal__content'], {[styles['active']]: active})}
-                onClick={e => e.stopPropagation()}
+                onClick={stopPropagationHandler}
             >
                 <CrossIcon className={styles['cross']} onClick={() => setActive(false)}/>
 
-                {children}
-            </div>
+            {children}
         </div>
-    );
+    </div>
+    )
 };
 
 export default memo(Modal);

@@ -4,7 +4,6 @@ import tableReducer from "./tableSlice";
 import {TableData} from "../types";
 
 export interface TableSchema {
-    selectOptions: string[];
     data: TableData;
 }
 

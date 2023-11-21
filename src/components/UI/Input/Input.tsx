@@ -20,18 +20,16 @@ const Input:FC<IInputProps> = ({
    placeholder,
    error,
    errorMessage,
-}) => {
-    return (
-        <>
-            <input
-                className={cn(styles['input'], {[styles['input--error']]: error})}
-                type={type}
-                {...register}
-                placeholder={placeholder}
-            />
-            <div className={cn(styles['error-text'], {[styles['visible']]: error})}>{errorMessage}</div>
-        </>
-    );
-};
+}) => (
+    <>
+        <input
+            className={cn(styles['input'], {[styles['input--error']]: error})}
+            type={type}
+            {...register}
+            placeholder={placeholder}
+        />
+        <div className={cn(styles['error-text'], {[styles['visible']]: error})}>{errorMessage}</div>
+    </>
+);
 
 export default Input;

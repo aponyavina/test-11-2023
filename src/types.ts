@@ -23,3 +23,18 @@ export interface TableData {
 }
 
 export type RowType = 'empty' | 'filled'
+
+export interface addTableRowAction {
+    tableId: number | string
+    data: IRowData
+}
+
+export interface deleteTableRowAction {
+    tableId: string
+    dataId: number
+}
+
+export interface duplicateTableAction {
+    id: number
+    tableId: string
+}

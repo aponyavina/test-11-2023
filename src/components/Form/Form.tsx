@@ -1,12 +1,12 @@
 import React, {FC, memo, useEffect} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import cn from "classnames";
 
-import {addTableRow, editTableRow, selectOptionsSelector} from '../../redux/tableSlice';
+import {addTableRow, editTableRow} from '../../redux/tableSlice';
 import {useGlobalContext} from '../../context/Context';
 import {EditingData, Inputs, TypedDispatch} from "../../types";
-import {DEFAULT_TABLE, ERROR_MESSAGES} from "../../constants";
+import {CITY_OPTIONS, DEFAULT_TABLE, ERROR_MESSAGES} from "../../constants";
 import Input from "../UI/Input/Input";
 import CustomSelect from "../UI/Select/Select";
 
@@ -41,15 +41,13 @@ export const Form:FC<IAddFormProps> = memo(({defaultValues, className}) => {
         }
     }, [defaultValue, setValue]);
 
-    const selectOptions = useSelector(selectOptionsSelector);
-
     const onSubmit: SubmitHandler<Inputs> = (data) => {
         const resetForm = () => {
             reset();
             setValue('city', null);
         }
-        if (defaultValues) {
-            dispatch(editTableRow({tableId, data: {...data, id: defaultValue?.id}}));
+        if (defaultValues && defaultValue?.id) {
+            dispatch(editTableRow({tableId, data: {...data, id: defaultValue.id}}));
             resetForm();
             setModalActive(false);
         } else {
@@ -79,7 +77,10 @@ export const Form:FC<IAddFormProps> = memo(({defaultValues, className}) => {
             <div className={styles['form__group']}>
                 <Input
                     type='number'
-                    register={register('age', { required: true,  validate: (value) => (value > 14 && value < 90) })}
+                    register={register('age', {
+                        required: true,
+                        validate: (value) => (value >= 14 && value <= 90)
+                    })}
                     placeholder='Age'
                     error={errors?.age}
                     errorMessage={ERROR_MESSAGES.AGE}
@@ -96,7 +97,7 @@ export const Form:FC<IAddFormProps> = memo(({defaultValues, className}) => {
                         },
                     }}
                     placeholder='City'
-                    options={selectOptions}
+                    options={CITY_OPTIONS}
                 />
             </div>
 

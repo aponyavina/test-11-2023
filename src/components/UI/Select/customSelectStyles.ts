@@ -42,6 +42,9 @@ export const customStyles = () => ({
         ':hover': {
             fontWeight: 700,
             color: '#000',
-        }
+        },
+        ':active': {
+            backgroundColor: '#fff',
+        },
     })
 });

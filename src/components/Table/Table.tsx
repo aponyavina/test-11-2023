@@ -20,7 +20,8 @@ const Table:FC<ITableProps> = ({data, tableId}) => {
     const dispatch = useDispatch<TypedDispatch>();
 
     const duplicateHandler = () => {
-        dispatch(duplicateTable({id: Number(new Date().getTime()), tableId}));
+        const time = Number(new Date().getTime());
+        dispatch(duplicateTable({id: +time, tableId}));
     }
 
     const deleteHandler = () => {
